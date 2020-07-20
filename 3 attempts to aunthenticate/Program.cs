@@ -18,7 +18,7 @@ namespace _3_attempts_to_authenticate
          * ===================================================================
          * GenerateLogin
          * 
-         * Генерирует логин, который имеет размер от 5 до 7 символов.
+         * Генерирует логин, который имеет размер от 6 до 9 символов.
          *  Возвращает строку логина.
          * 
          * Использует переменные:
@@ -28,7 +28,7 @@ namespace _3_attempts_to_authenticate
         static string GenerateLogin( char[] allVowels, char[] allConsonants)
         {
             Random random = new Random();
-            int rndSizeLogin = random.Next(5, 8);
+            int rndSizeLogin = random.Next(3, 5);
             int rndNum = default;
             bool rndBool = default;
             int cntVowels = 2;
@@ -41,11 +41,10 @@ namespace _3_attempts_to_authenticate
                 {
                     char symbol = (char)random.Next(65, 91);
                     sb.Append(symbol);
-                    continue;
                 }
 
-                //-----> Рандомное булевое значение.
-                rndBool = random.Next(2) == 0 ? false : true;
+                //-----> Рандомное булевое значение для функции ниже.
+                rndBool = GetRandomBoolValue();
 
                 //-----> Генерация гласных символов в логине, не больше 2.
                 if (rndBool == true && cntVowels > 0)
@@ -53,7 +52,6 @@ namespace _3_attempts_to_authenticate
                     cntVowels--;
                     rndNum = random.Next(0, 6);
                     sb.Append(allVowels[rndNum]);
-                    continue;
                 }
 
                 //-----> Генерация согласных символов в логине.
@@ -65,6 +63,7 @@ namespace _3_attempts_to_authenticate
             return result;
         }
 
+       
         //static char[] GeneratePassword()
         //{
 
@@ -78,6 +77,14 @@ namespace _3_attempts_to_authenticate
         static bool Сoincidence(string randomLoginAndPassword)
         {
             return false;
+        }
+
+        static bool GetRandomBoolValue()
+        {
+            Random random = new Random();
+            bool rndBool = default;
+
+            return rndBool = random.Next(2) == 0 ? false : true;
         }
     }
 }
