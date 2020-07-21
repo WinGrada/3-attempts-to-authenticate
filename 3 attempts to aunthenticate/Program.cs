@@ -9,8 +9,28 @@ namespace _3_attempts_to_authenticate
         {
             char[] allVowels = new char[6] { 'a', 'e', 'i', 'o', 'u', 'y' };
             char[] allConsonants = new char[20] { 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z' };
-            Console.WriteLine(GenerateLogin(allVowels, allConsonants));
-            Console.WriteLine(GeneratePassword());
+
+            //-----> Генерация рандомного логина и пароля.
+            string randomLoginAndPassword = CombineLoginAndPassword(allVowels, allConsonants);
+            Console.WriteLine(randomLoginAndPassword);
+
+            //-----> Ввод логина и пароля пользователя.
+            Console.WriteLine("Пожалуйста введите логин и пароль ввыше.");
+            Console.WriteLine("У вас только 3 попытки!\n");
+            string userOption = default;
+
+            //------> Цикл с 3 попытками ввести верный пароль.
+            for (int i = 0; i < 3; i++)
+            {
+                userOption = Console.ReadLine();
+                if (i == 2)
+                {
+                    Console.WriteLine("Хм, Вы не справились за 3 попытки...");
+                    Environment.Exit(500);
+                }
+                if (СoincidenceLoginAndPassword(randomLoginAndPassword, userOption)) break;
+            }
+            Console.WriteLine("Поздравляю, вы справились с задачей!");
 
 
         }
@@ -94,6 +114,8 @@ namespace _3_attempts_to_authenticate
             Random random = new Random();
             int recommendedSize = 4;
 
+            //------------------------------------------------------->
+            //-----> Создание динамической строки, содержащей логин.
             StringBuilder sb = new StringBuilder();
             for(int i = 0; i < recommendedSize; i++)
             {
@@ -126,6 +148,22 @@ namespace _3_attempts_to_authenticate
             return result;
         }
 
+        /* ===================================================================
+         *                  Объединение логина и пароля
+         * ===================================================================
+         * CombineLoginAndPassword
+         * 
+         * С помощью функций GenerateLogin и GeneratePassword, получает 
+         * сгенерированый результат, затем объединяет его и возвращает.
+         * 
+         * Использует функции:
+         *          GenerateLogin - генератор логина.
+         *          GeneratePassword - генератор пароля.
+         *          
+         * Использует переменные:
+         *          char [] allVowels - массив всех глассных.
+         *          char[] allConsonants - массив всех согласных.
+        */
         static string CombineLoginAndPassword(char [] allVowels, char[] allConsonants)
         {
             string login = GenerateLogin(allVowels, allConsonants);
@@ -134,8 +172,10 @@ namespace _3_attempts_to_authenticate
             return $@"{login}\{password}";
         }
 
-        static bool Сoincidence(string randomLoginAndPassword)
+        static bool СoincidenceLoginAndPassword(string randomLoginAndPassword, string userLoginAndPassword)
         {
+            if (randomLoginAndPassword == userLoginAndPassword) return true;
+
             return false;
         }
 
